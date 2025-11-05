@@ -72,4 +72,148 @@ sources:
               description: cost of shipping per order
               tests:
                 - not_null
-              
+# intermediate models
+
+# first model
+models:
+  - name: int_orders_margin
+    description: table with overview of margin etc per order
+    columns:
+      - name: orders_id
+        description: id per order, primary key
+        tests:
+          - unique
+          - not_null
+      - name: date_date
+        description: date of the order
+        tests:
+          - not_null
+      - name: revenue
+        description: revenue of the order
+        tests:
+          - not_null
+      - name: quantity
+        description: quantity of products in the order?
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: purchase cost of products of the order
+        tests:
+          - not_null
+      - name: margin
+        description: margin of the order
+        tests:
+          - not_null
+
+# 2nd intermediate model        
+  - name: int_sales_margin
+    description: table with overview of margin etc per sale. each line is a order_id with a product id
+    tests:
+      - unique:
+          column_name: "(orders_id || '_' ||products_id)"
+
+    columns:
+      - name: orders_id
+        description: order_id of that sale
+        tests:
+          - not_null
+      - name: products_id
+        description: id of the product of that sale
+      - name: date_date
+        description: date of the sale
+        tests:
+          - not_null
+      - name: revenue
+        description: revenue of the sale
+        tests:
+          - not_null
+      - name: quantity
+        description: quantity of products in that sale
+        tests:
+          - not_null
+      - name: purchase_price
+        description: purchase price of single product of that sale
+        tests:
+          - not_null
+      - name: purchase_cost
+        description: purchase cost of products of all product in that sale (purchase cost * quantity)
+        tests:
+          - not_null
+      - name: margin
+        description: margin of the sale
+        tests:
+          - not_null  
+
+## 3rd intermediate model
+
+
+  - name: int_orders_operational
+    description: table with overview of operational_margin etc per order
+    columns:
+      - name: orders_id
+        description: id per order, primary key
+        tests:
+          - unique
+          - not_null
+      - name: date_date
+        description: date of the order
+        tests:
+          - not_null
+      - name: revenue
+        description: revenue of the order
+        tests:
+          - not_null
+      - name: quantity
+        description: quantity of products in the order?
+        tests:
+          - not_null
+      - name: operational_margin
+        description: operational_margin of the order (margin + shipping fee - ship cost - log cost)
+        tests:
+          - not_null
+### mart
+
+  - name: finance_days
+    description: overview of different KPIs on daily granularity
+    columns:
+      - name: date_date
+        description: unique days, primary_key
+        tests:
+          - unique
+          - not_null
+      - name: total_number_transactions
+        description: number of transactions of that day
+        tests:
+          - not_null
+      - name: Total_number_transactions
+        description: number of transactions of that day
+        tests:
+          - not_null
+      - name: Total_revenue
+        description: sum of revenue of that day
+        tests:
+          - not_null
+      - name: Average_Basket
+        description: average basket of that day (Total_revenue / nb transactions)
+        tests:
+          - not_null  
+      - name: total_operational_margin
+        description: sum of operational margin of that day
+        tests:
+          - not_null
+      - name: total_purchase_cost
+        description: sum of purhase cost of that day
+        tests:
+          - not_null
+      - name: total_shipping_fee
+        description: sum of shipping fee of that day
+        tests:
+          - not_null
+      - name: total_log_cost
+        description: sum of log_cost of that day
+        tests:
+          - not_null
+      - name: total_quantity_of_products_sold
+        description: sum of quantity (products sold) of that day
+        tests:
+          - not_null
