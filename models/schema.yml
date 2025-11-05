@@ -30,7 +30,7 @@ sources:
                 - not_null
                 
             - name: revenue
-              description: revenue created by the order 
+              description: revenue of product in that order
             - name: quantity
               description: the amount of products in that order
           # Freshness testing
@@ -48,6 +48,7 @@ sources:
                 - unique 
                 - not_null 
             - name: purchSE_PRICE
+              description: purchase price of that product
               tests: 
                 - not_null 
         - name: ship
