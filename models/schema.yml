@@ -244,7 +244,7 @@ models:
         description: aggregated all impressions per day
         tests:
           - not_null
-      - name: clicks
+      - name: click
         description: aggregated all clicks per day
         tests:
           - not_null
