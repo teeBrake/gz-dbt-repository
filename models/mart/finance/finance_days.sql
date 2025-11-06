@@ -12,6 +12,8 @@ The finance team has communicated that they want the following data at a daily g
     Total quantity of products sold.
 */
 
+-- {{ config(materialized='table')}}
+
 select
 
         date_date
