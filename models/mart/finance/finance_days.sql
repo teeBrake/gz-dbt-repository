@@ -24,6 +24,7 @@ select
     ,   ROUND(SUM(purchase_cost),2)                                  as total_purchase_cost
     ,   ROUND(SUM(shipping_fee),2)                                   as total_shipping_fee
     ,   ROUND(SUM(logcost),2)                                        as total_log_cost
+    ,   ROUND(SUM(ship_cost),2)                                      as ship_cost
     ,   SUM(quantity)                                      as total_quantity_of_products_sold
 
 from {{ ref('int_orders_operational') }}
