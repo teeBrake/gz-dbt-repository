@@ -188,6 +188,45 @@ models:
         description: operational_margin of the order (margin + shipping fee - ship cost - log cost)
         tests:
           - not_null
+
+
+  #### intermediate_model campaigns_day
+
+  - name: int_campaigns
+    description: intermediate table that unioned all adds datasets
+    tests:
+            - unique:
+                column_name: "(date_date || '_' ||paid_source || '_' || campaign_key || '_' || campaign_name)"
+    columns: 
+      - name: date_date
+        description: date, primary key
+        tests:
+          
+          - not_null
+      - name: paid_source
+        description: add source (bing, criteo, facebook, adwords)
+        tests:
+          - not_null
+      - name: campaign_key
+        description: key of the campaign
+        tests:
+          - not_null
+      - name: campaign_name
+        description: name of the campaign
+        tests:
+          - not_null
+      - name: ads_cost
+        description: cost of the add campaign
+        tests:
+          - not_null
+      - name: impression
+        description: nb of impressions generated
+        tests:
+          - not_null
+      - name: click
+        description: nb of clicks generated
+        tests:
+          - not_null              
 ### mart
 
   - name: finance_days
