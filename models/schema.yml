@@ -199,9 +199,8 @@ models:
                 column_name: "(date_date || '_' ||paid_source || '_' || campaign_key || '_' || campaign_name)"
     columns: 
       - name: date_date
-        description: date, primary key
+        description: date
         tests:
-          
           - not_null
       - name: paid_source
         description: add source (bing, criteo, facebook, adwords)
@@ -226,7 +225,31 @@ models:
       - name: click
         description: nb of clicks generated
         tests:
-          - not_null              
+          - not_null
+###### int_campaigns_day
+  - name: int_campaigns_day
+    description: aggregated int_campaings to daily granularity
+    
+    columns: 
+      - name: date_date
+        description: date, primary key
+        tests:          
+          - not_null
+          - unique
+      - name: ads_cost
+        description: aggregated all ads cost per day
+        tests:
+          - not_null
+      - name: impression
+        description: aggregated all impressions per day
+        tests:
+          - not_null
+      - name: clicks
+        description: aggregated all clicks per day
+        tests:
+          - not_null
+      
+
 ### mart
 
   - name: finance_days
@@ -274,5 +297,62 @@ models:
         tests:
           - not_null
 
+### 2nd mart model: finance_campaigns_days
 
-          
+
+  - name: finance_campaings_days
+    description: overview of different KPIs (added are ads_cost, clicks, impression) on daily granularity
+    columns:
+      - name: date_date
+        description: unique days, primary_key
+        tests:
+          - unique
+          - not_null
+      - name: total_number_transactions
+        description: number of transactions of that day
+        tests:
+          - not_null
+      - name: Total_number_transactions
+        description: number of transactions of that day
+        tests:
+          - not_null
+      - name: Total_revenue
+        description: sum of revenue of that day
+        tests:
+          - not_null
+      - name: Average_Basket
+        description: average basket of that day (Total_revenue / nb transactions)
+        tests:
+          - not_null  
+      - name: total_operational_margin
+        description: sum of operational margin of that day
+        tests:
+          - not_null
+      - name: total_purchase_cost
+        description: sum of purhase cost of that day
+        tests:
+          - not_null
+      - name: total_shipping_fee
+        description: sum of shipping fee of that day
+        tests:
+          - not_null
+      - name: total_log_cost
+        description: sum of log_cost of that day
+        tests:
+          - not_null
+      - name: total_quantity_of_products_sold
+        description: sum of quantity (products sold) of that day
+        tests:
+          - not_null       
+      
+      - name: total_ads_cost
+        description: sum of all ads cost per day
+        tests:
+          - not_null
+      - name: clicks
+        description: sum of all clicks generated per day
+        tests:
+          - not_null
+      - name: impressions
+        description: sum of impressions generated per day
+          - not_null
